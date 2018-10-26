@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+const HtmlBundle = new HtmlWebpackPlugin({
   template: './src/index.html',
   filename: 'index.html',
   inject: 'body'
@@ -25,24 +25,24 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: [/\.scss$/, /\.css$/], 
+      { test: /\.html$/,          loader: 'html-loader',  exclude: /node_modules/ },
+      { test:[/\.js$/, /\.jsx$/], loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.jsx$/,           loader: 'babel-loader', exclude: /node_modules/ },
+      { test:[/\.scss$/, /\.css$/],
         use: [
-          { loader: 'style-loader', options: { }}, // creates style nodes from JS strings
-          { loader: 'css-loader', options: {} }, // translates CSS into CommonJS
-          { loader: 'sass-loader', options: {} } // compiles Sass to CSS, using Node Sass by default
+          { loader: 'style-loader', options: {} },  // creates style nodes from JS strings
+          { loader: 'css-loader',   options: {} },  // translates CSS into CommonJS
+          { loader: 'sass-loader',  options: {} }   // compiles Sass to CSS, using Node Sass by default
         ],
         exclude: /node_modules/
       },
       { test: /\.(ttf|eot|woff2|woff|png|gif|svg)$/,
-        use: {
-            loader: 'file-loader',
-            options: { name: './assets/fonts/[name].[ext]'}
-        },
+        use: [
+          { loader: 'file-loader', options: { name: './assets/fonts/[name].[ext]' } }
+        ],
         exclude: /node_modules/
       }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig]
+  plugins: [HtmlBundle]
 };
