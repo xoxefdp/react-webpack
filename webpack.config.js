@@ -2,8 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const HtmlBundle = new HtmlWebpackPlugin({
+  title: 'React and Webpack4',
   template: './src/index.html',
   filename: 'index.html',
+  favicon: './src/assets/images/favicon.ico',
   inject: 'body'
 });
 
@@ -36,13 +38,19 @@ module.exports = {
         ],
         exclude: /node_modules/
       },
-      { test: /\.(ttf|eot|woff2|woff|png|gif|svg)$/,
+      { test: /\.(ttf|eot|woff2|woff)$/,
         use: [
           { loader: 'file-loader', options: { name: './assets/fonts/[name].[ext]' } }
         ],
         exclude: /node_modules/
+      },
+      { test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
+        use: [
+          { loader: 'file-loader', options: { name: './assets/images/[name].[ext]' } }
+        ],
+        exclude: /node_modules/
       }
-    ]
+    ],
   },
   plugins: [HtmlBundle]
 };
